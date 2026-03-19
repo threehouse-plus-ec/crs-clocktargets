@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this feasibility analysis, please cite it as below."
+type: report
+title: "Feasibility Dossier: Ionic-Core Clock-State Targets in Circular Rydberg Atoms"
+authors:
+  - family-names: Warring
+    given-names: Ulrich
+    orcid: ""
+    affiliation: "Physikalisches Institut, Albert-Ludwigs-Universität Freiburg"
+version: "1.0"
+date-released: "2026-03-19"
+url: ""
+abstract: >-
+  Open feasibility study exploring whether the circular Rydberg state (CRS)
+  platform for ⁸⁸Sr could be used for precision measurements of ionic-core
+  atomic-structure quantities relevant to strontium ion clocks. Identifies
+  quadrupole moments and E2 matrix elements as high-potential targets,
+  specifies falsifiable feasibility gates and a no-go criterion, and
+  concludes that CRS is best positioned as a differential probe of atomic
+  structure under distinct electromagnetic boundary conditions rather than
+  a competitor to ion clocks for absolute accuracy.
+keywords:
+  - circular Rydberg states
+  - strontium ion clock
+  - electric quadrupole moment
+  - precision spectroscopy
+  - atomic structure
+  - feasibility study
+license: CC-BY-4.0

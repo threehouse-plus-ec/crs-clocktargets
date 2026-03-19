@@ -9,7 +9,8 @@ authors:
     affiliation: "Physikalisches Institut, Albert-Ludwigs-Universität Freiburg"
 version: "1.0"
 date-released: "2026-03-19"
-url: ""
+url: "https://threehouse-plus-ec.github.io/crs-clocktargets/"
+repository-code: "https://github.com/threehouse-plus-ec/crs-clocktargets"
 abstract: >-
   Open feasibility study exploring whether the circular Rydberg state (CRS)
   platform for ⁸⁸Sr could be used for precision measurements of ionic-core

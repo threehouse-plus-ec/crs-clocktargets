@@ -21,13 +21,13 @@ The study explicitly concludes that CRS is not a replacement for ion clocks but 
 
 ## Documents
 
-- **[Feasibility Dossier](docs/feasibility-dossier.md)** — the full analysis (v1.0), including target ranking, signal/noise model, comparison to ion-trap methods, feasibility gates, failure modes, bibliography, and a PhD-student tutorial.
+- **[Feasibility Dossier](https://threehouse-plus-ec.github.io/crs-clocktargets/feasibility-dossier)** — the full analysis (v1.0), including target ranking, signal/noise model, comparison to ion-trap methods, feasibility gates, failure modes, bibliography, and a PhD-student tutorial.
 
 ## How to cite
 
 If you build on the analysis, target ranking, feasibility gates, or forward-model scaffold in this dossier, please cite:
 
-> Ulrich Warring, *Feasibility Dossier: Ionic-Core Clock-State Targets in Circular Rydberg Atoms*, FD-2026-CRS-ClockTargets v1.0 (2026). Available at: [repository URL]
+> Ulrich Warring, *Feasibility Dossier: Ionic-Core Clock-State Targets in Circular Rydberg Atoms*, FD-2026-CRS-ClockTargets v1.0 (2026). Available at: [https://threehouse-plus-ec.github.io/crs-clocktargets/](https://threehouse-plus-ec.github.io/crs-clocktargets/)
 
 A machine-readable citation is provided in [CITATION.cff](CITATION.cff).
 

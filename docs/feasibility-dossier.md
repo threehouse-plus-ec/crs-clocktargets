@@ -440,3 +440,5 @@ For a PhD student approaching this topic:
 ---
 
 **Endorsement Marker:** Feasibility/candidate programme document under local stewardship. Proposes measurements and estimates viability; does not claim demonstrated precision. All estimates order-of-magnitude, subject to forward-model revision. Per-target classifications are independent and must not be aggregated.
+
+**Cite as:** Ulrich Warring, *Feasibility Dossier: Ionic-Core Clock-State Targets in Circular Rydberg Atoms*, FD-2026-CRS-ClockTargets v1.0 (2026). [https://threehouse-plus-ec.github.io/crs-clocktargets/](https://threehouse-plus-ec.github.io/crs-clocktargets/)

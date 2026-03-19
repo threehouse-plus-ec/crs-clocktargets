@@ -1,3 +1,5 @@
 title: "CRS Clock Targets"
 description: "Feasibility study: ionic-core clock-state targets in circular Rydberg atoms"
 theme: jekyll-theme-minimal
+baseurl: "/crs-clocktargets"
+url: "https://threehouse-plus-ec.github.io"

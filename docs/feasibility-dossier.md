@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Feasibility Dossier: Ionic-Core Clock-State Targets in Circular Rydberg Atoms"
+---
+
 # Feasibility Dossier: Ionic-Core Clock-State Targets in Circular Rydberg Atoms
 
 **Endorsement marker:** Local candidate framework - T(h)reehouse +EC stewardship. No external endorsement implied.

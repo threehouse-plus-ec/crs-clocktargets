@@ -8,14 +8,15 @@ This repository contains the feasibility dossier on ionic-core clock-state targe
 It asks whether the CRS platform developed in Stuttgart could become a defensible differential probe of
 quadrupole-sensitive Sr+ structure quantities under electromagnetic boundary conditions that differ from a Paul trap.
 
-The public-facing homepage in `index.html` is a manual Threehouse-compliant rendering of this README, the dossier
-in `docs/feasibility-dossier.md`, and the copied asset layer in `assets/`.
+The public-facing site is served via GitHub Pages from the `docs/` directory. The homepage in `docs/index.html` is a
+manual Threehouse-compliant rendering; the dossier in `docs/feasibility-dossier.md` is rendered by Jekyll using the
+layout in `docs/_layouts/default.html` and the asset layer in `docs/assets/`.
 
 ## Authoritative sources
 
 - `README.md` is the authoritative Markdown source for the repository overview.
 - `docs/feasibility-dossier.md` is the authoritative Markdown source for the full dossier.
-- `index.html` is a rendered access surface, not the canonical source text.
+- `docs/index.html` is a rendered access surface, not the canonical source text.
 
 ## Documents
 
@@ -24,8 +25,9 @@ in `docs/feasibility-dossier.md`, and the copied asset layer in `assets/`.
 
 ## Build method
 
-Current build method: manual rendering from the Markdown sources above, the copied Threehouse asset layer under
-`assets/`, and `assets/tokens.css`.
+The homepage (`docs/index.html`) is a manual rendering with inline CSS. The dossier (`docs/feasibility-dossier.md`)
+is rendered by Jekyll (kramdown) with the Threehouse layout and the copied asset layer under `docs/assets/`.
+GitHub Pages source: `docs/` directory.
 
 ## Design authority
 
@@ -49,5 +51,5 @@ This repository follows a split licence architecture. See `LICENCE` for the gove
 
 Ulrich Warring  
 Physikalisches Institut  
-Albert-Ludwigs-Universitat Freiburg  
+Albert-Ludwigs-Universität Freiburg  
 ulrich.warring@physik.uni-freiburg.de

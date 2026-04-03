@@ -3,3 +3,4 @@ description: "Feasibility study: ionic-core clock-state targets in circular Rydb
 baseurl: "/crs-clocktargets"
 url: "https://threehouse-plus-ec.github.io"
 markdown: kramdown
+permalink: pretty

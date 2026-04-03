@@ -1,5 +1,7 @@
 # Feasibility Dossier: Ionic-Core Clock-State Targets in Circular Rydberg Atoms
 
+**Endorsement marker:** Local candidate framework - T(h)reehouse +EC stewardship. No external endorsement implied.
+
 **Dossier ID:** FD-2026-CRS-ClockTargets  
 **Version:** 1.0 (2026-03-19)  
 **Type:** Feasibility study / candidate programme design  

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | default: site.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/tokens.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <a href="#content" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <div class="site-shell site-header__inner">
+      <a class="brand-lockup" href="{{ '/' | relative_url }}" aria-label="CRS Clock Targets home">
+        <img src="{{ '/assets/emblem-32.svg' | relative_url }}" alt="T(h)reehouse +EC emblem">
+        <img src="{{ '/assets/wordmark-full.svg' | relative_url }}" alt="T(h)reehouse +EC wordmark">
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="site-nav__list">
+          <li><a href="{{ '/' | relative_url }}">Overview</a></li>
+          <li><a href="{{ '/feasibility-dossier' | relative_url }}">Dossier</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" class="site-shell page-shell">
+    <article class="prose-card">
+      {{ content }}
+    </article>
+  </main>
+
+  <footer class="site-shell colophon">
+    <img src="{{ '/assets/wordmark-full.svg' | relative_url }}" alt="T(h)reehouse +EC wordmark">
+    <p>Markdown remains authoritative. Assets are copied from `threehouse-plus-ec/cd-rules` and tracked in `docs/assets/SOURCE.md`.</p>
+  </footer>
+  <script>
+    const tables = document.querySelectorAll(".prose-card table");
+
+    tables.forEach((table, index) => {
+      if (table.parentElement.classList.contains("table-wrap")) {
+        return;
+      }
+
+      const wrap = document.createElement("div");
+      wrap.className = "table-wrap";
+      wrap.setAttribute("role", "region");
+      wrap.setAttribute("tabindex", "0");
+      wrap.setAttribute("aria-label", `Scrollable dossier table ${index + 1}`);
+      table.setAttribute("aria-label", `Dossier table ${index + 1}`);
+      table.parentNode.insertBefore(wrap, table);
+      wrap.appendChild(table);
+    });
+  </script>
+</body>
+</html>

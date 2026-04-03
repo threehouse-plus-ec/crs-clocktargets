@@ -1,0 +1,25 @@
+/*
+ * T(h)reehouse +EC - Design Tokens
+ * Source: corporate-design/assets/tokens.css
+ * Licence: MIT
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+:root {
+  --ink: #1a1a1a;
+  --sea: #2c5f7c;
+  --signal: #c0392b;
+  --stone: #6b6b6b;
+  --parchment: #f5f0e8;
+  --grid: #e0dbd2;
+  --warm-white: #faf8f4;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-serif: 'Crimson Pro', Georgia, serif;
+  --measure: 38rem;
+  --gutter: 1.5rem;
+  --focus-ring: 2px solid var(--sea);
+  --focus-offset: 2px;
+  --min-target: 2.75rem;
+  --min-target-aa: 1.5rem;
+}

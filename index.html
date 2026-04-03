@@ -1,1002 +1,1039 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRS Clock Targets — Feasibility Dossier v1.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #faf9f7;
-  --bg-alt: #f2f0ec;
-  --bg-dark: #1a1917;
-  --text: #2c2a26;
-  --text-muted: #6b6860;
-  --text-light: #9a9589;
-  --accent: #c04e2a;
-  --accent-light: #e8d5cc;
-  --accent-subtle: #f5ece7;
-  --blue: #2a5c8c;
-  --blue-light: #d4e2ef;
-  --green: #3a7a52;
-  --green-light: #d6ead9;
-  --gold: #b8941e;
-  --gold-light: #f5efd4;
-  --border: #ddd9d0;
-  --border-light: #eae7e0;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'Source Sans 3', 'Segoe UI', sans-serif;
-  --mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --max-w: 780px;
-  --max-w-wide: 1060px;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRS Clock Targets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/tokens.css">
+  <style>
+    :root {
+      color-scheme: light;
+    }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+    }
 
-html { scroll-behavior: smooth; font-size: 17px; }
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--parchment);
+      color: var(--ink);
+    }
 
-body {
-  font-family: var(--sans);
-  color: var(--text);
-  background: var(--bg);
-  line-height: 1.72;
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-}
+    body {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.68;
+      background-image:
+        linear-gradient(to right, rgba(224, 219, 210, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(224, 219, 210, 0.22) 1px, transparent 1px);
+      background-size: 3rem 3rem;
+    }
 
-::selection { background: var(--accent-light); color: var(--text); }
+    @media (max-width: 640px) {
+      body {
+        font-size: 16px;
+      }
+    }
 
-/* ── HERO ── */
-.hero {
-  background: var(--bg-dark);
-  color: #f0ede8;
-  padding: 5rem 2rem 4rem;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 600px 400px at 20% 60%, rgba(192,78,42,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 500px 500px at 80% 30%, rgba(42,92,140,0.10) 0%, transparent 70%);
-}
-.hero-inner {
-  max-width: var(--max-w-wide);
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-.hero-badge {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid rgba(192,78,42,0.4);
-  padding: 0.25em 0.75em;
-  border-radius: 2px;
-  margin-bottom: 1.5rem;
-}
-.hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.18;
-  max-width: 720px;
-  margin-bottom: 1.2rem;
-  letter-spacing: -0.01em;
-}
-.hero h1 em {
-  font-style: italic;
-  color: var(--accent);
-  opacity: 0.9;
-}
-.hero-sub {
-  font-size: 1.05rem;
-  color: #b0ada6;
-  max-width: 600px;
-  line-height: 1.65;
-  margin-bottom: 2rem;
-}
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.8rem;
-  font-size: 0.82rem;
-  color: #8a8780;
-  font-family: var(--mono);
-}
-.hero-meta dt { color: #6a6760; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.68rem; margin-bottom: 0.15rem; }
-.hero-meta dd { color: #c0bdb6; }
+    a,
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea {
+      min-height: var(--min-target-aa);
+    }
 
-/* ── NAV ── */
-.toc-bar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(250,249,247,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-light);
-  padding: 0 2rem;
-}
-.toc-inner {
-  max-width: var(--max-w-wide);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.toc-inner::-webkit-scrollbar { display: none; }
-.toc-inner a {
-  display: block;
-  font-size: 0.73rem;
-  font-family: var(--mono);
-  letter-spacing: 0.03em;
-  color: var(--text-muted);
-  text-decoration: none;
-  padding: 0.85rem 0.65rem;
-  white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
-}
-.toc-inner a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    :focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-offset);
+    }
 
-/* ── MAIN ── */
-main { padding: 0 2rem; }
-.container { max-width: var(--max-w); margin: 0 auto; }
-.container-wide { max-width: var(--max-w-wide); margin: 0 auto; }
+    @media (prefers-reduced-motion: no-preference) {
+      html {
+        scroll-behavior: smooth;
+      }
 
-section { padding: 3.5rem 0 2.5rem; }
-section + section { border-top: 1px solid var(--border-light); }
+      .reveal {
+        opacity: 0;
+        transform: translateY(1.1rem);
+        animation: rise 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
 
-h2 {
-  font-family: var(--serif);
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 0.3rem;
-  letter-spacing: -0.01em;
-}
-.section-num {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  display: block;
-  margin-bottom: 0.4rem;
-}
+      .reveal-delay-1 {
+        animation-delay: 100ms;
+      }
 
-h3 {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--text);
-  margin: 2rem 0 0.6rem;
-}
+      .reveal-delay-2 {
+        animation-delay: 200ms;
+      }
 
-h4 {
-  font-family: var(--sans);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text);
-  margin: 1.5rem 0 0.4rem;
-}
+      .reveal-delay-3 {
+        animation-delay: 300ms;
+      }
+    }
 
-p { margin-bottom: 1rem; }
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
 
-strong { font-weight: 600; }
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(1.1rem);
+      }
 
-em { font-style: italic; }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-/* ── CALLOUT BOXES ── */
-.callout {
-  border-left: 3px solid var(--accent);
-  background: var(--accent-subtle);
-  padding: 1.1rem 1.3rem;
-  margin: 1.5rem 0;
-  border-radius: 0 4px 4px 0;
-  font-size: 0.95rem;
-}
-.callout.blue { border-left-color: var(--blue); background: var(--blue-light); }
-.callout.green { border-left-color: var(--green); background: var(--green-light); }
-.callout.gold { border-left-color: var(--gold); background: var(--gold-light); }
-.callout-label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.4rem;
-  display: block;
-}
-.callout.blue .callout-label { color: var(--blue); }
-.callout.green .callout-label { color: var(--green); }
-.callout.gold .callout-label { color: var(--gold); }
-.callout .callout-label { color: var(--accent); }
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      padding: 0.75rem 1.5rem;
+      background: var(--ink);
+      color: var(--parchment);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      z-index: 1000;
+    }
 
-/* ── CLASSIFICATION BADGES ── */
-.badge {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  padding: 0.15em 0.55em;
-  border-radius: 3px;
-  vertical-align: middle;
-}
-.badge-a1 { background: #d4f0d8; color: #1a6b2e; }
-.badge-a2 { background: #d4e2ef; color: #1a4a6e; }
-.badge-b { background: #f5efd4; color: #7a6a10; }
-.badge-b-def { background: #f0ead4; color: #8a7a30; }
-.badge-c { background: #ede8e4; color: #7a7268; }
+    .skip-link:focus {
+      top: 0;
+    }
 
-/* ── TABLES ── */
-.table-wrap {
-  overflow-x: auto;
-  margin: 1.5rem 0;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.82rem;
-  line-height: 1.5;
-}
-thead { background: var(--bg-alt); }
-th {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  text-align: left;
-  padding: 0.7rem 0.8rem;
-  border-bottom: 2px solid var(--border);
-  white-space: nowrap;
-}
-td {
-  padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid var(--border-light);
-  vertical-align: top;
-}
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(0,0,0,0.015); }
+    .site-shell {
+      width: min(calc(100% - 3rem), 72rem);
+      margin: 0 auto;
+    }
 
-/* ── CODE / MATH ── */
-code, .mono {
-  font-family: var(--mono);
-  font-size: 0.88em;
-  background: var(--bg-alt);
-  padding: 0.1em 0.35em;
-  border-radius: 3px;
-}
-.eq {
-  display: block;
-  text-align: center;
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  font-style: italic;
-  padding: 1.2rem 1rem;
-  margin: 1.2rem 0;
-  background: var(--bg-alt);
-  border-radius: 4px;
-  overflow-x: auto;
-}
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(245, 240, 232, 0.9);
+      border-bottom: 1px solid var(--grid);
+    }
 
-/* ── GATE CARDS ── */
-.gates {
-  display: grid;
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-.gate {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1rem 1.2rem;
-  background: #fff;
-  position: relative;
-}
-.gate::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
-  border-radius: 6px 0 0 6px;
-}
-.gate.critical::before { background: var(--accent); }
-.gate.standard::before { background: var(--blue); }
-.gate.final::before { background: var(--green); }
-.gate-id {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
-}
-.gate.critical .gate-id { color: var(--accent); }
-.gate.standard .gate-id { color: var(--blue); }
-.gate.final .gate-id { color: var(--green); }
-.gate-title { font-weight: 600; margin-bottom: 0.25rem; }
-.gate-desc { font-size: 0.88rem; color: var(--text-muted); }
+    @media (prefers-reduced-motion: no-preference) {
+      .site-header {
+        transition: transform 220ms ease;
+      }
+    }
 
-/* ── TIMELINE ── */
-.timeline {
-  position: relative;
-  margin: 1.5rem 0 1.5rem 1.5rem;
-  padding-left: 1.8rem;
-  border-left: 2px solid var(--border);
-}
-.timeline-item {
-  position: relative;
-  margin-bottom: 1.5rem;
-}
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -2.35rem;
-  top: 0.35rem;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  background: var(--bg);
-}
-.timeline-item:nth-child(2)::before { border-color: var(--blue); }
-.timeline-item:nth-child(3)::before { border-color: var(--green); }
-.timeline-label {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--text-light);
-  letter-spacing: 0.05em;
-  margin-bottom: 0.15rem;
-}
-.timeline-title { font-weight: 600; margin-bottom: 0.2rem; }
-.timeline-desc { font-size: 0.9rem; color: var(--text-muted); }
+    .site-header.is-hidden {
+      transform: translateY(calc(-100% - 1px));
+    }
 
-/* ── BIBLIO ── */
-.bib-entry {
-  margin-bottom: 1.2rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--border-light);
-  font-size: 0.9rem;
-}
-.bib-key {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--accent);
-}
-.bib-entry a {
-  color: var(--blue);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
-}
-.bib-entry a:hover { border-bottom-color: var(--blue); }
+    .site-header__inner {
+      width: min(calc(100% - 3rem), 72rem);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 0;
+    }
 
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 2.5rem 2rem;
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 0.82rem;
-  color: var(--text-light);
-}
-footer a { color: var(--text-muted); }
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-height: 44px;
+      text-decoration: none;
+      color: inherit;
+    }
 
-/* ── LEGEND GRID ── */
-.legend-grid {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.35rem 0.8rem;
-  font-size: 0.88rem;
-  margin: 1rem 0;
-}
-.legend-grid .badge { justify-self: start; }
+    .brand-lockup img:first-child {
+      width: 32px;
+      height: 32px;
+      flex: none;
+    }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 640px) {
-  html { font-size: 15.5px; }
-  .hero { padding: 3rem 1.2rem 2.5rem; }
-  .hero-meta { gap: 1rem; }
-  main { padding: 0 1.2rem; }
-  .toc-bar { padding: 0 1rem; }
-  .eq { font-size: 1rem; }
-}
+    .brand-lockup img:last-child {
+      width: 7.05rem;
+      height: auto;
+      flex: none;
+    }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.hero-inner > * {
-  animation: fadeUp 0.6s ease-out both;
-}
-.hero-inner > *:nth-child(2) { animation-delay: 0.08s; }
-.hero-inner > *:nth-child(3) { animation-delay: 0.16s; }
-.hero-inner > *:nth-child(4) { animation-delay: 0.24s; }
-.hero-inner > *:nth-child(5) { animation-delay: 0.32s; }
+    .site-nav {
+      justify-self: end;
+    }
 
-/* ── NON-IDEAL ITEMS ── */
-.correction-list {
-  counter-reset: correction;
-  list-style: none;
-  margin: 1rem 0;
-}
-.correction-list li {
-  counter-increment: correction;
-  position: relative;
-  padding-left: 2.2rem;
-  margin-bottom: 0.8rem;
-  font-size: 0.93rem;
-}
-.correction-list li::before {
-  content: counter(correction);
-  position: absolute;
-  left: 0;
-  top: 0.08rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-}
-</style>
+    .site-nav__list {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-nav a,
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: var(--min-target);
+      padding: 0.5rem 0.9rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.3;
+      color: var(--sea);
+      text-decoration: none;
+      border: 1px solid transparent;
+      background: transparent;
+    }
+
+    .site-nav a:hover,
+    .site-nav a:focus-visible,
+    .nav-toggle:hover,
+    .nav-toggle:focus-visible {
+      border-color: var(--grid);
+      background: rgba(250, 248, 244, 0.88);
+    }
+
+    .nav-toggle {
+      display: none;
+      cursor: pointer;
+      justify-self: end;
+    }
+
+    main {
+      display: block;
+      padding: 0 0 4rem;
+    }
+
+    .hero {
+      padding: 6rem 0 3rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.85fr);
+      gap: 2rem;
+      align-items: end;
+    }
+
+    .eyebrow,
+    .section-heading,
+    .label,
+    .research-callout__label,
+    .hero-metrics dt,
+    .table-caption {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .eyebrow,
+    .section-heading,
+    .label,
+    .hero-metrics dt,
+    .table-caption {
+      color: var(--sea);
+    }
+
+    .hero h1 {
+      max-width: 12ch;
+      margin: 1rem 0 1rem;
+      font-family: var(--font-serif);
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      line-height: 0.96;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      max-width: var(--measure);
+      margin: 0 0 0.85rem;
+      font-size: 1rem;
+    }
+
+    .hero-intro {
+      font-size: 1.15rem;
+      line-height: 1.55;
+    }
+
+    .hero-marker {
+      max-width: 34rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .button-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: var(--min-target);
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--ink);
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.3;
+      text-decoration: none;
+    }
+
+    .button-link--secondary {
+      border-color: var(--grid);
+      color: var(--sea);
+      background: transparent;
+    }
+
+    .hero-panel,
+    .research-callout,
+    .demonstrator-table,
+    .colophon {
+      background: rgba(250, 248, 244, 0.92);
+      border: 1px solid var(--grid);
+    }
+
+    .hero-panel {
+      padding: 1.4rem;
+      position: relative;
+      overflow: clip;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto -3rem -3rem auto;
+      width: 10rem;
+      height: 10rem;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(224, 219, 210, 0.85) 0%, rgba(224, 219, 210, 0) 72%);
+      pointer-events: none;
+    }
+
+    .hero-panel h2,
+    .section-header p,
+    .layer-copy p,
+    .research-callout p,
+    td {
+      margin: 0;
+    }
+
+    .hero-panel h2 {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      line-height: 1.55;
+      font-weight: 400;
+      margin-top: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin: 1.4rem 0 0;
+    }
+
+    .hero-metrics div {
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--grid);
+    }
+
+    .hero-metrics dt {
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-metrics dd {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    section {
+      padding-top: 3.5rem;
+    }
+
+    .section-rule {
+      width: 1.5rem;
+      height: 1px;
+      margin: 0 0 1.2rem;
+      border: 0;
+      background: var(--grid);
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(15rem, 24rem);
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 1.8rem;
+    }
+
+    .section-header h2 {
+      margin: 0.25rem 0 0;
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      line-height: 1.08;
+      font-weight: 400;
+      max-width: 14ch;
+    }
+
+    .section-header p {
+      max-width: 32rem;
+      font-size: 1rem;
+    }
+
+    .layer-stack {
+      display: grid;
+      gap: 1px;
+      border: 1px solid var(--grid);
+      background: var(--grid);
+    }
+
+    .layer-row {
+      display: grid;
+      grid-template-columns: 2.8rem minmax(0, 1fr);
+      background: var(--warm-white);
+    }
+
+    .layer-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--grid);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.3;
+      color: var(--stone);
+    }
+
+    .layer-row--gate .layer-marker,
+    .layer-row--gate .label {
+      color: var(--signal);
+    }
+
+    .layer-copy {
+      padding: 1rem 1rem 1.1rem;
+    }
+
+    .layer-copy h3 {
+      margin: 0 0 0.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    .layer-copy p + p {
+      margin-top: 0.55rem;
+    }
+
+    .layer-copy p {
+      max-width: var(--measure);
+    }
+
+    .research-callout {
+      padding: 1.25rem 1.25rem 1.25rem 1.4rem;
+      border-left: 3px solid var(--sea);
+    }
+
+    .research-callout__label {
+      display: inline-block;
+      margin-bottom: 0.6rem;
+      color: var(--sea);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .evidence-card {
+      padding: 1rem;
+      background: var(--warm-white);
+      border: 1px solid var(--grid);
+    }
+
+    .evidence-card h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.3;
+      font-weight: 500;
+      color: var(--sea);
+    }
+
+    .evidence-card p {
+      margin: 0;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-inline: calc(-1 * var(--gutter));
+      padding-inline: var(--gutter);
+    }
+
+    .table-wrap:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 0.25rem;
+    }
+
+    .table-wrap::after {
+      content: "";
+      position: sticky;
+      right: 0;
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      margin-left: auto;
+      background: linear-gradient(to left, var(--parchment), transparent);
+      pointer-events: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      font-variant-numeric: tabular-nums;
+      margin: 0;
+    }
+
+    caption {
+      padding: 1rem 1rem 0;
+      text-align: left;
+    }
+
+    thead th {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 0.75rem;
+      line-height: 1.3;
+      color: var(--ink);
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--stone);
+      vertical-align: bottom;
+    }
+
+    tbody td {
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--ink);
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--grid);
+      vertical-align: top;
+    }
+
+    @media (hover: hover) {
+      tbody tr:hover {
+        background: var(--warm-white);
+      }
+    }
+
+    .demonstrator-table {
+      padding-bottom: 0.5rem;
+    }
+
+    .colophon {
+      margin-top: 4rem;
+      padding: 1.4rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .colophon img {
+      width: 7.05rem;
+      height: auto;
+    }
+
+    .colophon p {
+      margin: 0;
+    }
+
+    .colophon .status {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.3;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .colophon .maxim {
+      margin-top: 0.45rem;
+      font-style: italic;
+    }
+
+    .colophon .meta {
+      margin-top: 0.7rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--stone);
+    }
+
+    @media (max-width: 880px) {
+      .hero,
+      .section-header,
+      .evidence-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-shell,
+      .site-header__inner {
+        width: min(calc(100% - 2.5rem), 72rem);
+      }
+
+      .site-header__inner {
+        padding: 0.7rem 0;
+        grid-template-columns: auto auto;
+      }
+
+      .site-nav {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+      }
+
+      .site-nav[data-open="false"] {
+        display: none;
+      }
+
+      .site-nav__list {
+        flex-direction: column;
+        gap: 0.35rem;
+        padding-top: 0.4rem;
+      }
+
+      .site-nav a {
+        justify-content: flex-start;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .hero {
+        padding-top: 4rem;
+      }
+
+      section {
+        padding-top: 2.5rem;
+      }
+
+      .section-rule {
+        margin-bottom: 1rem;
+      }
+
+      .layer-row {
+        grid-template-columns: 2.2rem minmax(0, 1fr);
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      table.stackable thead {
+        display: none;
+      }
+
+      table.stackable tr {
+        display: block;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--grid);
+      }
+
+      table.stackable td {
+        display: block;
+        padding: 0.4rem 0.75rem;
+        border: none;
+        font-size: 0.85rem;
+      }
+
+      table.stackable td::before {
+        content: attr(data-label);
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        line-height: 1.3;
+        font-weight: 500;
+        color: var(--stone);
+        margin-bottom: 0.15rem;
+      }
+
+      .colophon {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<!-- ═══════════ HERO ═══════════ -->
-<header class="hero">
-  <div class="hero-inner">
-    <span class="hero-badge">FD-2026-CRS-ClockTargets · v1.0</span>
-    <h1>Ionic-Core Clock-State Targets in <em>Circular Rydberg Atoms</em></h1>
-    <p class="hero-sub">
-      An open feasibility study exploring whether the CRS platform for ⁸⁸Sr can probe quadrupole moments and atomic-structure quantities relevant to strontium ion clocks — under electromagnetic boundary conditions qualitatively different from a Paul trap.
-    </p>
-    <dl class="hero-meta">
-      <div><dt>Author</dt><dd>Ulrich Warring</dd></div>
-      <div><dt>Affiliation</dt><dd>Physikalisches Institut, Universität Freiburg</dd></div>
-      <div><dt>Date</dt><dd>2026-03-19</dd></div>
-      <div><dt>Licence</dt><dd>CC BY 4.0</dd></div>
-      <div><dt>Origin</dt><dd>Inspired by lab visit, Stuttgart (Meinert group)</dd></div>
-    </dl>
-  </div>
-</header>
-
-<!-- ═══════════ STICKY NAV ═══════════ -->
-<nav class="toc-bar">
-  <div class="toc-inner">
-    <a href="#overview">Overview</a>
-    <a href="#problem">Problem</a>
-    <a href="#mechanism">Mechanism</a>
-    <a href="#targets">Targets</a>
-    <a href="#signal-noise">Signal / Noise</a>
-    <a href="#comparison">Comparison</a>
-    <a href="#gates">Feasibility Gates</a>
-    <a href="#path">Experimental Path</a>
-    <a href="#failures">Failure Modes</a>
-    <a href="#strategy">Strategy</a>
-    <a href="#pending">Pending Items</a>
-    <a href="#biblio">Bibliography</a>
-    <a href="#tutorial">Tutorial</a>
-  </div>
-</nav>
-
-<main>
-
-<!-- ═══════════ OVERVIEW ═══════════ -->
-<section id="overview">
-  <div class="container">
-    <span class="section-num">Overview</span>
-    <h2>What This Study Does — and Does Not — Claim</h2>
-
-    <div class="callout">
-      <span class="callout-label">Anchor Statement</span>
-      The CRS platform is promising not because it obviously beats ion clocks in absolute precision, but because it offers a differently sourced and potentially better modelled rank-2 perturbation for extracting quadrupole-sensitive ionic-core quantities.
+  <a href="#content" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand-lockup" href="#top" aria-label="CRS Clock Targets home">
+        <img src="assets/emblem-32.svg" alt="T(h)reehouse +EC emblem">
+        <img src="assets/wordmark-full.svg" alt="T(h)reehouse +EC wordmark">
+      </a>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        aria-label="Toggle navigation"
+      >
+        Menu
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary" data-open="true">
+        <ul class="site-nav__list">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#targets">Targets</a></li>
+          <li><a href="#gates">Gates</a></li>
+          <li><a href="#table">Table</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <p>This repository contains an open feasibility study exploring whether the circular Rydberg state (CRS) platform developed by the Meinert group at the 5. Physikalisches Institut, Universität Stuttgart, could be used for precision measurements of ionic-core atomic-structure quantities relevant to strontium ion clocks.</p>
+  <main id="content">
+    <div class="site-shell">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="reveal">
+          <p class="eyebrow">Feasibility dossier</p>
+          <p class="label hero-marker">Endorsement marker: Local candidate framework - T(h)reehouse +EC stewardship. No external endorsement implied.</p>
+          <h1 id="hero-title">Clock-state targets in circular Rydberg atoms.</h1>
+          <p class="hero-intro">
+            A Threehouse-aligned specimen page for the CRS feasibility dossier: explicit about what is maintained,
+            what remains model-dependent, and what would falsify the programme.
+          </p>
+          <p>
+            The work does not position CRS as a replacement for trapped-ion clocks. It frames CRS as a differential
+            probe of ionic-core structure under a differently sourced rank-2 perturbation, with feasibility gates
+            stated up front rather than hidden in narrative optimism.
+          </p>
+          <div class="hero-actions">
+            <a class="button-link" href="docs/feasibility-dossier.md">Read the full dossier</a>
+            <a class="button-link button-link--secondary" href="#table">Inspect the target table</a>
+          </div>
+        </div>
 
-    <p>The core idea is that the electric-field gradient generated by a circular Rydberg electron at the position of the Sr⁺ ionic core provides a geometrically constrained perturbation that could be used to extract quadrupole moments, E2 matrix elements, and related quantities under electromagnetic boundary conditions qualitatively different from those of a Paul trap.</p>
+        <aside class="hero-panel reveal reveal-delay-1" aria-labelledby="hero-panel-title">
+          <p class="label">Current scope</p>
+          <h2 id="hero-panel-title">CRS is treated here as an orthogonal atomic-structure probe, not as a direct clock competitor.</h2>
+          <p>
+            The central question is whether the internally generated Rydberg-electron field gradient can support
+            useful extraction of quadrupole-sensitive Sr+ quantities before model uncertainty or state impurity
+            takes control of the result.
+          </p>
+          <dl class="hero-metrics" aria-label="Project markers">
+            <div>
+              <dt>Best near-term class</dt>
+              <dd>A1</dd>
+            </div>
+            <div>
+              <dt>Primary leverage</dt>
+              <dd>Quadrupole access</dd>
+            </div>
+            <div>
+              <dt>No-go trigger</dt>
+              <dd>n-drift &gt; 5%</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
 
-    <div class="callout blue">
-      <span class="callout-label">Scope Constraint</span>
-      This is <strong>not</strong> a claim of demonstrated precision, nor a programmatic commitment. It is a feasibility analysis that identifies candidate measurement targets, ranks them by plausibility, specifies falsifiable feasibility gates, and defines a no-go criterion. All quantitative estimates are order-of-magnitude. The study explicitly concludes that CRS is not a replacement for ion clocks but a potential <strong>differential probe of atomic structure under distinct conditions</strong>.
+      <section id="overview" aria-labelledby="overview-title">
+        <hr class="section-rule">
+        <div class="section-header reveal reveal-delay-1">
+          <div>
+            <p class="section-heading">Interpretive frame</p>
+            <h2 id="overview-title">The dossier separates maintained claims from open correction channels.</h2>
+          </div>
+          <p>
+            The page follows the Threehouse layer logic directly: maintained reference, readable structure, and an
+            explicit correction gate. That keeps the argument inspectable instead of collapsing signal, speculation,
+            and programme branding into the same visual register.
+          </p>
+        </div>
+
+        <div class="layer-stack reveal reveal-delay-2" aria-label="Project layer stack">
+          <article class="layer-row">
+            <div class="layer-marker">01</div>
+            <div class="layer-copy">
+              <h3 class="label">Maintained reference</h3>
+              <p>
+                The dossier anchors itself to peer-reviewed CRS and Sr+ literature, explicit target classes, and a
+                bounded comparison with conventional ion-trap methods.
+              </p>
+            </div>
+          </article>
+          <article class="layer-row">
+            <div class="layer-marker">02</div>
+            <div class="layer-copy">
+              <h3 class="label">Readable structure</h3>
+              <p>
+                A1, A2, B, B-deferred, and C remain distinct. Direct quadrupole extraction, model-dependent
+                quantities, and non-competitive benchmark quantities are not aggregated into a false portfolio score.
+              </p>
+            </div>
+          </article>
+          <article class="layer-row layer-row--gate">
+            <div class="layer-marker">EC</div>
+            <div class="layer-copy">
+              <h3 class="label">Correction gate</h3>
+              <p>
+                If the n-consistency check fails by more than 5 percent after identified corrections are applied, the
+                programme reverts to model-validation status rather than precision extraction.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="targets" aria-labelledby="targets-title">
+        <hr class="section-rule">
+        <div class="section-header reveal">
+          <div>
+            <p class="section-heading">Priority targets</p>
+            <h2 id="targets-title">The strongest near-term claims stay close to demonstrated quadrupole coupling.</h2>
+          </div>
+          <p>
+            The target ordering follows the dossier's own selection rule: maximise directness of coupling to the
+            Rydberg-generated gradient, signal size at demonstrated n, and shortness of the inference chain from
+            spectroscopy to extracted quantity.
+          </p>
+        </div>
+
+        <div class="research-callout reveal reveal-delay-1">
+          <span class="research-callout__label">Research callout</span>
+          <p>
+            The immediate programme is not "measure everything the platform touches." It is narrower: establish
+            whether Theta(D3/2) and Theta(D5/2) can be extracted with a defensible uncertainty budget before moving to
+            quantities that depend on a longer modelling chain.
+          </p>
+        </div>
+
+        <div class="evidence-grid reveal reveal-delay-2">
+          <article class="evidence-card">
+            <h3>A1: Theta(D3/2)</h3>
+            <p>
+              Lowest-hanging direct target. D3/2 coupling has already been demonstrated in the CRS context, making a
+              first direct extraction plausible if sub-kHz spectroscopy and purity characterisation follow.
+            </p>
+          </article>
+          <article class="evidence-card">
+            <h3>A1: Theta(D5/2)</h3>
+            <p>
+              Most clock-relevant state constant. The prospective gain is cleaner gradient provenance than in external
+              ion-trap calibration, but only if the forward model survives cross-n consistency tests.
+            </p>
+          </article>
+          <article class="evidence-card">
+            <h3>A2: E2 matrix elements</h3>
+            <p>
+              Scientifically attractive, but explicitly downstream of the quadrupole programme because the extraction
+              depends on more modelling steps between observed signal and reported atomic-structure quantity.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="gates" aria-labelledby="gates-title">
+        <hr class="section-rule">
+        <div class="section-header reveal">
+          <div>
+            <p class="section-heading">Feasibility gates</p>
+            <h2 id="gates-title">The work stays useful only if the hard gates are met conjunctively.</h2>
+          </div>
+          <p>
+            These are not optional milestones. The dossier treats them as load-bearing conditions: spectroscopy,
+            purity, stray-field control, and cross-n consistency each have to hold before a precision claim can be
+            defended as more than a suggestive qualitative result.
+          </p>
+        </div>
+
+        <div class="evidence-grid reveal reveal-delay-1">
+          <article class="evidence-card">
+            <h3>DC-F1</h3>
+            <p>
+              Ionic-core spectroscopy at or below 1 kHz resolution. This is the most immediate technical bottleneck
+              between present capability and usable extraction.
+            </p>
+          </article>
+          <article class="evidence-card">
+            <h3>DC-F2</h3>
+            <p>
+              Circular-state purity high enough that admixture-induced gradient uncertainty stays below the target
+              precision floor. State impurity is not a cosmetic correction.
+            </p>
+          </article>
+          <article class="evidence-card">
+            <h3>DC-F3 / DC-F4</h3>
+            <p>
+              Stray-field-bounded gradient uncertainty below 1 percent of the quadrupole signal and agreement between
+              extractions at n = 79 and n = 89 within mutual uncertainties.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="table" aria-labelledby="table-title">
+        <hr class="section-rule">
+        <div class="section-header reveal">
+          <div>
+            <p class="section-heading">Target table</p>
+            <h2 id="table-title">The target register stays compact, semantic, and readable on small screens.</h2>
+          </div>
+          <p>
+            This summary table follows the Threehouse table rules directly: semantic headers, open edges, horizontal
+            separators only, and stacked mobile fallback with `data-label` so the header context survives at narrow
+            widths.
+          </p>
+        </div>
+
+        <div class="demonstrator-table reveal reveal-delay-1">
+          <div class="table-wrap" role="region" aria-labelledby="table-caption" tabindex="0">
+            <table class="stackable">
+              <caption class="table-caption" id="table-caption">Priority register from the feasibility dossier</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Target</th>
+                  <th scope="col">Current reading</th>
+                  <th scope="col">Class</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Target">Theta(D3/2) of 88Sr+</td>
+                  <td data-label="Current reading">Best first direct extraction candidate because CRS coupling is already demonstrated.</td>
+                  <td data-label="Class">A1</td>
+                </tr>
+                <tr>
+                  <td data-label="Target">Theta(D5/2) of 88Sr+</td>
+                  <td data-label="Current reading">Most clock-relevant target; cleaner gradient provenance is attractive if modelling holds.</td>
+                  <td data-label="Class">A1</td>
+                </tr>
+                <tr>
+                  <td data-label="Target">E2 matrix elements</td>
+                  <td data-label="Current reading">Interesting, but pushed behind quadrupole extraction because the inference chain is longer.</td>
+                  <td data-label="Class">A2</td>
+                </tr>
+                <tr>
+                  <td data-label="Target">Differential tensor polarisability</td>
+                  <td data-label="Current reading">Potentially separable in CRS geometry, but current resolution requirements keep it secondary.</td>
+                  <td data-label="Class">B</td>
+                </tr>
+                <tr>
+                  <td data-label="Target">Scalar / BBR benchmark quantities</td>
+                  <td data-label="Current reading">Explicitly non-competitive against present ion-clock results and excluded from the primary programme.</td>
+                  <td data-label="Class">C</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <footer class="colophon reveal reveal-delay-2">
+        <img src="assets/wordmark-full.svg" alt="T(h)reehouse +EC wordmark">
+        <div>
+          <p class="status">Specimen status: active local adaptation</p>
+          <p class="maxim">A survey marker that knows it is fallible and has encoded how to find truth again.</p>
+          <p class="meta">
+            Built against `threehouse-plus-ec/cd-rules` commit 8671c9333f42d5c6396652f98a30b626bd308886.
+            Assets are copied under `assets/` with provenance recorded in `assets/SOURCE.md`. The authoritative
+            source texts remain Markdown in `README.md` and `docs/feasibility-dossier.md`.
+          </p>
+        </div>
+      </footer>
     </div>
-
-    <p><strong>Constraint selection rule:</strong> <code>CANONICAL-SUPPORTED</code> — peer-reviewed literature as primary anchor; preprints admitted provisionally.</p>
-    <p><strong>Strategic framing:</strong> Orthogonal systematics. Not a competition with ion clocks for absolute accuracy, but a differential probe of atomic structure under distinct electromagnetic boundary conditions.</p>
-  </div>
-</section>
-
-<!-- ═══════════ CLASSIFICATION LEGEND ═══════════ -->
-<section id="legend" style="padding-top:0; border-top: none;">
-  <div class="container">
-    <h3>Target Classification Legend</h3>
-    <div class="legend-grid">
-      <span class="badge badge-a1">A1</span>
-      <span>High-potential, direct: CRS advantage plausible, extraction depends primarily on spectroscopic data and well-characterised leading-order physics</span>
-      <span class="badge badge-a2">A2</span>
-      <span>High-potential, model-dependent: CRS advantage plausible, but extraction requires a validated forward model with non-trivial corrections</span>
-      <span class="badge badge-b">B</span>
-      <span>Complementary only: CRS provides an independent cross-check but is unlikely to surpass conventional methods</span>
-      <span class="badge badge-b-def">B-def</span>
-      <span>Longer-horizon exploratory: plausible in principle but dependent on undemonstrated capabilities</span>
-      <span class="badge badge-c">C</span>
-      <span>Not competitive: unrealistic with current or near-term CRS linewidths</span>
-    </div>
-    <div class="callout gold">
-      <span class="callout-label">Anti-Aggregation Notice</span>
-      The per-target classifications are independent assessments. They cannot be combined into a programmatic value score, portfolio ranking, or aggregate feasibility metric without violating the epistemic discipline of this dossier.
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ PROBLEM DEFINITION ═══════════ -->
-<section id="problem">
-  <div class="container">
-    <span class="section-num">§1 · Problem Definition</span>
-    <h2>Which Targets, and Why CRS?</h2>
-
-    <p><strong>Question:</strong> Which atomic-structure targets relevant to ionic clocks could be measured or constrained using the divalent-atom circular Rydberg state (CRS) platform, and for which of these does the CRS environment offer a genuine advantage over conventional trapped-ion methods?</p>
-
-    <h3>1.1 Target Classes</h3>
-
-    <h4>Quadrupole-sensitive quantities</h4>
-    <p>Targets whose measurement depends on knowledge of or sensitivity to the electric-field gradient at the ionic core: electric quadrupole moments Θ(D₅/₂) and Θ(D₃/₂) of ⁸⁸Sr⁺, E2 transition matrix elements ⟨D‖Q‖S⟩, and the nuclear quadrupole moment Q(⁸⁷Sr) via hyperfine structure.</p>
-
-    <h4>Tensor-shift quantities</h4>
-    <p>Targets whose measurement is complicated by entanglement of tensor Stark shifts with the electric quadrupole shift in conventional traps: the differential tensor polarisability Δα₂ and individual Zeeman-sublevel differential shifts under controlled field gradients.</p>
-
-    <h4>Scalar / BBR quantities</h4>
-    <p>Targets where conventional ion clocks are already at or approaching the 10⁻¹⁹ level: Δα₀, BBR shift coefficient, and absolute clock transition frequency.</p>
-
-    <h3>1.2 Exclusion</h3>
-    <p>The scalar/BBR quantities are excluded from the primary target list. The current best measurement of Δα₀ for ⁸⁸Sr⁺ achieves 4.1 × 10⁻⁴ fractional uncertainty, and the PTB clock operates at 7.9 × 10⁻¹⁹ systematic uncertainty. Competing on these quantities requires Hz-level spectroscopy on the 674 nm transition inside the CRS — currently three orders of magnitude beyond demonstrated resolution. These quantities are listed under Category C.</p>
-  </div>
-</section>
-
-<!-- ═══════════ MECHANISM ═══════════ -->
-<section id="mechanism">
-  <div class="container">
-    <span class="section-num">§2 · Platform Mechanism</span>
-    <h2>The Circular Rydberg Gradient</h2>
-
-    <h3>2.1 Core Idea</h3>
-    <p>The circular Rydberg electron in state |<em>n</em>, ℓ = <em>n</em>−1, <em>m</em> = <em>n</em>−1⟩ generates a Coulomb electric field and field gradient at the position of the ionic core. Because the circular state has maximal angular momentum and a well-defined orbital geometry (a thin ring of radius ⟨<em>r</em>⟩ ≈ <em>n</em>²<em>a</em>₀), this field has a simpler geometric provenance than externally applied trap gradients:</p>
-
-    <p><strong>Internally generated</strong> — not dependent on external electrode geometry, patch fields, or calibration drift. <strong>Geometrically constrained at leading order</strong> — the leading-order field gradient is determined by the ideal circular-state quantum numbers (<em>n</em>, ℓ, <em>m</em>) and fundamental constants. <strong>Orientation-locked</strong> — the gradient tensor orientation is set by <em>m</em> = <em>n</em>−1 relative to the quantisation axis.</p>
-
-    <p>The interaction Hamiltonian between the ionic core and the Rydberg electron's field can be represented schematically as:</p>
-
-    <div class="eq">
-      H<sub>int</sub> = −α₀|E<sub>Ryd</sub>|² − α₂ T₂(E<sub>Ryd</sub>) · T₂(D) + Θ · ∇E<sub>Ryd</sub> + …
-    </div>
-
-    <p>The Rydberg electron's field at the core position scales as |E<sub>Ryd</sub>| ~ <em>e</em>/(<em>n</em>⁴<em>a</em>₀²) and the gradient as |∇E<sub>Ryd</sub>| ~ <em>e</em>/(<em>n</em>⁶<em>a</em>₀³). Both decrease rapidly with <em>n</em>. For <em>n</em> = 79: |∇E<sub>Ryd</sub>| is on the order of 10⁸ V/m², comfortably in the range needed for kHz-scale quadrupole shifts.</p>
-
-    <h3>2.2 Non-Ideal Terms (Mandatory)</h3>
-    <p>The field gradient is not "known" — it is "modelled with corrections." The following non-ideal contributions must be quantified in any metrological extraction:</p>
-
-    <ol class="correction-list">
-      <li><strong>State impurity</strong> (coupled to item 2): Admixture of elliptical states (ℓ &lt; <em>n</em>−1) changes the field-gradient tensor. Stray dc electric fields that induce ℓ-mixing simultaneously distort the spatial symmetry, producing a tensor perturbation that couples to the quadrupole interaction. State impurity and stray-field perturbations must be treated jointly.</li>
-      <li><strong>External stray electric fields</strong> (coupled to item 1): Couple to the CRS polarisability (scaling as <em>n</em>⁷) and shift the circular orbit off-axis. Residual fields at the ~mV/m level produce perturbations that grow with <em>n</em>.</li>
-      <li><strong>Cavity-induced modifications:</strong> ITO-coated capacitor plates provide microwave-frequency mode suppression (BBR suppression), but static and low-frequency field distortions are less constrained.</li>
-      <li><strong>Tweezer-induced perturbations:</strong> The trapping light field interacts with the Rydberg electron (ponderomotive effect, growing with <em>n</em>) and with the ionic core (ac Stark shift, characterised).</li>
-      <li><strong>Wavefunction averaging:</strong> The naïve point-charge model must be replaced by ⟨<em>n</em>,ℓ,<em>m</em>|∇E|<em>n</em>,ℓ,<em>m</em>⟩. Corrections from finite orbital width are non-negligible at the required precision.</li>
-      <li><strong>Relativistic and QED corrections:</strong> At the ~10⁻⁴ level, relevant and calculable.</li>
-    </ol>
-  </div>
-</section>
-
-<!-- ═══════════ TARGETS ═══════════ -->
-<section id="targets">
-  <div class="container-wide">
-    <span class="section-num">§3 · Candidate Targets — Ranked</span>
-    <h2>Nine Targets, Five Categories</h2>
-
-    <p style="max-width:var(--max-w)"><strong>Target-selection rule:</strong> Primary programme targets should maximise (i) directness of coupling to the Rydberg-electron gradient, (ii) signal size at demonstrated <em>n</em> values, and (iii) shortness of the inferential chain — while minimising dependence on undemonstrated apparatus capabilities.</p>
-
-    <h3>3.1 Summary Table</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>#</th><th>Target</th><th>Type</th><th>Current Best</th><th>Ion-Trap Limitation</th><th>CRS Advantage</th><th>CRS Limitation</th><th>Class</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Θ(D₃/₂) of ⁸⁸Sr⁺</td><td>State constant</td><td>Theory only (~5%)</td><td>Not attempted</td><td>Demonstrated D₃/₂ coupling</td><td>Purity; model; resolution</td><td><span class="badge badge-a1">A1</span></td></tr>
-          <tr><td>2</td><td>Θ(D₅/₂) of ⁸⁸Sr⁺</td><td>State constant</td><td>2.6(3) ea₀² (~12%)</td><td>External gradient calibration</td><td>Internal gradient; simpler geometry</td><td>D₅/₂ not yet demonstrated in CRS</td><td><span class="badge badge-a1">A1</span></td></tr>
-          <tr><td>3</td><td>E2 matrix elements ⟨D‖Q‖S⟩</td><td>Atomic structure</td><td>Theory ~few %</td><td>No direct spectroscopic access</td><td>Direct gradient-driven transitions</td><td>Deconvolution; model-dependent</td><td><span class="badge badge-a2">A2</span></td></tr>
-          <tr><td>4</td><td>Δα₂ (tensor pol.)</td><td>Atomic structure</td><td>Not independently measured</td><td>EQS / tensor co-vary in Paul trap</td><td>Known E/∇E ratio separates them</td><td>~100 Hz resolution needed</td><td><span class="badge badge-b">B</span> (→A2)</td></tr>
-          <tr><td>5</td><td>Zeeman-sublevel shifts</td><td>Observable</td><td>Averaged over (6-pair)</td><td>Individual info destroyed</td><td>Controlled gradient; probes sublevels</td><td>Purity must ensure single-valued gradient</td><td><span class="badge badge-b">B</span></td></tr>
-          <tr><td>6</td><td>Q(⁸⁷Sr) nuclear</td><td>Nuclear constant</td><td>305(2) mb (~0.7%)</td><td>Theory-limited on <em>q<sub>J</sub></em></td><td>Could constrain <em>q<sub>J</sub></em> via E2 data</td><td>⁸⁷Sr CRS not demonstrated</td><td><span class="badge badge-b-def">B-def</span></td></tr>
-          <tr><td>7</td><td>Δα₀ (scalar pol.)</td><td>Atomic structure</td><td>4.1×10⁻⁴ frac.</td><td>Well controlled</td><td>No advantage</td><td>Resolution gap</td><td><span class="badge badge-c">C</span></td></tr>
-          <tr><td>8</td><td>BBR shift coeff.</td><td>Derived</td><td>&lt; 10⁻¹⁸</td><td>Mature methods</td><td>No advantage</td><td>—</td><td><span class="badge badge-c">C</span></td></tr>
-          <tr><td>9</td><td>Absolute ν<sub>clock</sub></td><td>Benchmark</td><td>9.8×10⁻¹⁷ frac.</td><td>Laser + comb + averaging</td><td>No path</td><td>Resolution, stability</td><td><span class="badge badge-c">C</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="container">
-    <h3>3.2 Category A1 — Direct, High-Potential</h3>
-    <p><strong>#1: Θ(D₃/₂)</strong> — Lowest-hanging fruit. Builds on Wirth et al. (2024). kHz-scale differential shift already observed. No direct experimental measurement exists. Even ~10% extraction would be a new result.</p>
-    <p><strong>#2: Θ(D₅/₂)</strong> — Most clock-relevant. Current best: 12% uncertainty (Barwood 2004), limited by external gradient calibration. CRS replaces this with forward-model uncertainty. Signal ~5–10 kHz at <em>n</em> = 79. D₅/₂ coupling inside CRS not yet demonstrated (requires Step 2).</p>
-
-    <h3>3.3 Category A2 — High-Potential, Model-Dependent</h3>
-    <p><strong>#3: E2 matrix elements</strong> — ∇E<sub>Ryd</sub> drives E2 transitions; Wirth et al. shows coherent driving on all eight D₃/₂ Zeeman components. Extraction requires comparing Rabi frequency with calculated gradient — longer inference chain. More model-dependent.</p>
-
-    <h3>3.4 Category B</h3>
-    <p><strong>#4: Δα₂</strong> — PTB explicitly cannot separate EQS from tensor Stark in Paul trap. CRS geometry fixes the E/∇E ratio, making them separable in principle. Requires ~100 Hz resolution and validated Θ. Category B now, potentially A2 at improved resolution.</p>
-    <p><strong>#5: Zeeman-sublevel shifts</strong> — CRS probes individual <em>m<sub>J</sub></em> responses without the averaging that clock cancellation schemes impose. Useful for testing atomic-structure calculations.</p>
-
-    <h3>3.5 Category B-Deferred</h3>
-    <p><strong>#6: Q(⁸⁷Sr)</strong> — Long inference chain: CRS → E2 → <em>q<sub>J</sub></em> → Q. Recent ~10% theory discrepancy. Requires ⁸⁷Sr CRS (speculative). Retained for completeness, deferred.</p>
-  </div>
-</section>
-
-<!-- ═══════════ SIGNAL / NOISE ═══════════ -->
-<section id="signal-noise">
-  <div class="container-wide">
-    <span class="section-num">§4 · Signal Model vs. Noise Model</span>
-    <h2>What Can Be Resolved?</h2>
-
-    <div class="container">
-      <h3>4.1 Signal Scaling</h3>
-      <p>At <em>n</em> = 79: |∇E<sub>Ryd</sub>| ≈ 1.6 × 10⁸ V/m²; δν<sub>Q</sub> ≈ 5–10 kHz.<br>
-      At <em>n</em> = 103: |∇E<sub>Ryd</sub>| ≈ 3.6 × 10⁷ V/m²; δν<sub>Q</sub> ≈ 1–2 kHz.</p>
-      <p>Signal favours lower <em>n</em>. Sweet spot: <em>n</em> ≈ 79–89 (signal + lifetime both sufficient).</p>
-
-      <h3>4.2 Noise Sources</h3>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Source</th><th>Origin</th><th><em>n</em>-Scaling</th><th>Current Magnitude</th><th>Dominant For</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Laser linewidth</td><td>674 nm not cavity-stabilised</td><td><em>n</em>-independent</td><td>~kHz</td><td>All targets</td></tr>
-          <tr><td>Stray E-fields</td><td>Patch potentials, ITO charging</td><td><em>n</em>⁷ (pol.)</td><td>~mV/m inferred</td><td>All (high <em>n</em>)</td></tr>
-          <tr><td>ℓ-mixing</td><td>Imperfect circularisation + Stark mixing</td><td>Increases with <em>n</em></td><td>Not quantified</td><td>A1, A2 targets</td></tr>
-          <tr><td>Cavity / tweezer</td><td>Static fields; ponderomotive</td><td><em>n</em>² (tweezer)</td><td>Light shift measured; static not</td><td>All</td></tr>
-          <tr><td>Forward model</td><td>Wavefunction averaging; QED</td><td>Complex (see §2.2)</td><td>Not evaluated</td><td>A1, A2 targets</td></tr>
-          <tr><td>Decoherence T₂</td><td>Field fluctuations</td><td><em>n</em>⁷</td><td>~100 μs Ramsey; ~ms echo</td><td>Long interrogation</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="container">
-      <h3>4.3 Precision Estimates</h3>
-      <p><strong>Near-term (1–2 yr):</strong> Θ extraction at ~5–10%, comparable to Barwood et al. The near-term advantage is not yet ultimate precision but a cleaner and orthogonal gradient provenance, which could later translate into superior precision once the forward model is validated.</p>
-      <p><strong>Medium-term (3–5 yr, sub-kHz resolution + purity):</strong> Potentially at the few-percent to ~1% level, contingent on DC-F1 through DC-F4.</p>
-      <p><strong>Δα₂:</strong> Not feasible at current resolution (needs ~100 Hz).</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ COMPARISON ═══════════ -->
-<section id="comparison">
-  <div class="container-wide">
-    <span class="section-num">§5 · Comparison to Standard Ion Experiments</span>
-    <h2>CRS vs. Ion Traps</h2>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Target</th><th>Ion-Trap Best</th><th>Ion Limitation</th><th>CRS Removes It?</th><th>CRS New Limitation</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Θ(D₅/₂)</td><td>2.6(3) ea₀² (~12%)</td><td>External gradient calibration</td><td><strong>Yes</strong> — simpler gradient provenance</td><td>Forward model; purity</td></tr>
-          <tr><td>Θ(D₃/₂)</td><td>Theory (~5%)</td><td>Not attempted</td><td><strong>Yes</strong> — demonstrated access</td><td>Same</td></tr>
-          <tr><td>E2 matrix elements</td><td>Theory (~few %)</td><td>No direct spectroscopic access</td><td><strong>Partially</strong> — gradient-driven transitions</td><td>Deconvolution; model</td></tr>
-          <tr><td>Δα₂</td><td>Not measured independently</td><td>EQS / tensor co-vary</td><td><strong>In principle</strong> — fixed E/∇E ratio</td><td>Resolution gap</td></tr>
-          <tr><td>Δα₀</td><td>4.1×10⁻⁴</td><td>Well controlled</td><td><strong>No</strong></td><td>Resolution gap</td></tr>
-          <tr><td>Absolute ν</td><td>9.8×10⁻¹⁷</td><td>Laser + comb</td><td><strong>No</strong></td><td>All</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ FEASIBILITY GATES ═══════════ -->
-<section id="gates">
-  <div class="container">
-    <span class="section-num">§6 · Discriminant Conditions</span>
-    <h2>Feasibility Gates</h2>
-    <p>These are <strong>conjunctive</strong>: all must be satisfied for full metrological viability.</p>
-
-    <div class="gates">
-      <div class="gate critical">
-        <div class="gate-id">DC-F1 · CRITICAL</div>
-        <div class="gate-title">Core spectroscopy resolution ≤ 1 kHz</div>
-        <div class="gate-desc">Technical-noise-limited (D₅/₂ Fourier limit is ~0.4 Hz). Single most critical gate. Plausible within 12–24 months given demonstrated spin-echo coherence of ~ms; requires no new principle but substantial technical work.</div>
-      </div>
-      <div class="gate critical">
-        <div class="gate-id">DC-F2 · CRITICAL</div>
-        <div class="gate-title">CRS purity ≥ 99% (ℓ-mixing &lt; 1%)</div>
-        <div class="gate-desc">Quantitative characterisation of circular-state preparation fidelity; purity high enough that admixture-induced gradient-tensor uncertainty remains below 1% of δν<sub>Q</sub>. Exact threshold depends on the forward model's mapping from admixture fraction to tensor perturbation magnitude.</div>
-      </div>
-      <div class="gate standard">
-        <div class="gate-id">DC-F3 · STANDARD</div>
-        <div class="gate-title">Stray-field-bounded gradient uncertainty &lt; 1% of δν<sub>Q</sub></div>
-        <div class="gate-desc">At <em>n</em> = 79, δν<sub>Q</sub> ≈ 5 kHz → stray-field shifts must be bounded below ~50 Hz. Includes both direct field perturbation and indirect ℓ-mixing perturbation. Plausible with standard compensation techniques plus Stark-spectroscopy calibration.</div>
-      </div>
-      <div class="gate standard">
-        <div class="gate-id">DC-F4 · DECISIVE</div>
-        <div class="gate-title"><em>n</em>-consistency ≤ 1%</div>
-        <div class="gate-desc">Θ extracted at <em>n</em> = 79 and <em>n</em> = 89 must agree within mutual uncertainties. Decisive physics test. Working expectation: 2–3 years.</div>
-      </div>
-      <div class="gate final">
-        <div class="gate-id">DC-F5 · FINAL</div>
-        <div class="gate-title">Cross-comparison with conventional value</div>
-        <div class="gate-desc">CRS extraction compared with conventional value at informative precision. Working expectation: 3–5 years.</div>
-      </div>
-    </div>
-
-    <div class="callout">
-      <span class="callout-label">No-Go Criterion</span>
-      If the <em>n</em>-consistency check (DC-F4) fails at the &gt; 5% level after inclusion of all identified correction terms from §2.2, the programme should not be framed as precision extraction of atomic constants. It should revert to qualitative cross-check or model-validation status. <strong>This is the hard stop condition.</strong>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ EXPERIMENTAL PATH ═══════════ -->
-<section id="path">
-  <div class="container">
-    <span class="section-num">§7 · Minimal Experimental Path</span>
-    <h2>Three Steps to Extraction</h2>
-
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-label">Step 1 · 12–18 months</div>
-        <div class="timeline-title">Reproduce + First Extraction</div>
-        <div class="timeline-desc">Reproduce Wirth et al. D₃/₂ coupling with sub-kHz resolution; characterise purity; publish first direct Θ(D₃/₂) extraction with quantified uncertainty budget, plausibly 5–10%.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-label">Step 2 · 18–36 months</div>
-        <div class="timeline-title">D₅/₂ Extension + <em>n</em>-Consistency</div>
-        <div class="timeline-desc">Extend to D₅/₂; <em>n</em>-consistency check at <em>n</em> = 79 and 89; aim for ≤ 5% extraction of Θ(D₅/₂), conditional on successful D₅/₂ coupling demonstration; compare with Barwood et al.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-label">Step 3 · 3–5 years</div>
-        <div class="timeline-title">Cross-Compare + Advanced Targets</div>
-        <div class="timeline-desc">Cross-compare with conventional values; if resolution permits (~100 Hz), attempt Δα₂ separation; explore ⁸⁷Sr CRS.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ FAILURE MODES ═══════════ -->
-<section id="failures">
-  <div class="container">
-    <span class="section-num">§8 · Failure Modes</span>
-    <h2>What Could Go Wrong</h2>
-
-    <h4>8.1 Forward-model breakdown</h4>
-    <p><em>n</em>-consistency check fails → model corrections dominate. <strong>Mitigate:</strong> ≥ 3 <em>n</em>-values; exploit distinct <em>n</em>-scaling of corrections.</p>
-
-    <h4>8.2 Insufficient resolution</h4>
-    <p>674 nm laser cannot reach sub-kHz in CRS apparatus. <strong>Mitigate:</strong> clock-lab technology transfer; spin echo.</p>
-
-    <h4>8.3 Purity ceiling</h4>
-    <p>ℓ-mixing saturates at ~5% due to stray-field coupling (§2.2 items 1–2). Purity and field problems cannot be solved independently. <strong>Mitigate:</strong> joint purity + field diagnostics; improved circularisation.</p>
-
-    <h4>8.4 Decoherence at signal-optimal <em>n</em></h4>
-    <p>T₂ too short at <em>n</em> ≈ 79–89. <strong>Mitigate:</strong> field compensation; slightly higher <em>n</em> (trade signal for coherence).</p>
-  </div>
-</section>
-
-<!-- ═══════════ STRATEGY ═══════════ -->
-<section id="strategy">
-  <div class="container">
-    <span class="section-num">§9 · Strategic Positioning</span>
-    <h2>Differential Probe, Not Replacement</h2>
-
-    <div class="callout green">
-      <span class="callout-label">Core Thesis</span>
-      CRS is not a replacement for ion clocks. It is a differential probe of atomic structure under distinct electromagnetic boundary conditions.
-    </div>
-
-    <p>The core ion inside a CRS sees no Paul-trap micromotion, no ion-ion Coulomb coupling, an internally generated field gradient, and a cavity-modified BBR environment. Agreement or disagreement with ion-clock values is scientifically informative — but only if the CRS measurement itself is interpretable, i.e. only if DC-F2 (purity), DC-F3 (field bounds), and DC-F4 (model validation) are satisfied.</p>
-
-    <p>A discrepancy arising from unmodelled ℓ-mixing rather than genuine Θ physics would be noise, not signal. The "either way informative" claim is conditional on the feasibility gates.</p>
-
-    <p><strong>Publication path:</strong> reproduce → extract → compare (§7).</p>
-  </div>
-</section>
-
-<!-- ═══════════ PENDING ═══════════ -->
-<section id="pending">
-  <div class="container">
-    <span class="section-num">§10 · Pending Items and Load-Bearing Assumptions</span>
-    <h2>What Remains Open</h2>
-
-    <h3>10.1 Pending</h3>
-    <p><strong>Forward model</strong> at <em>n</em> = 79 with all §2.2 corrections, including stray-field/ℓ-mixing coupling — the true bottleneck. Also pending: <em>n</em>-dependence study for model validation, ⁸⁷Sr CRS preparation (speculative), and frequency comb integration.</p>
-
-    <h3>10.2 Load-Bearing Assumptions</h3>
-    <p>CRS purity quantifiable at &lt; 1% admixture level. Forward model validatable across <em>n</em> (DC-F4). Sub-kHz ionic-core spectroscopy achievable (technology transfer, not new physics). External field perturbations boundable below model uncertainty. Stray-field / ℓ-mixing coupling can be modelled or measured independently — if not, the "self-referenced" advantage is lost.</p>
-
-    <h3>10.3 Next Technical Task: Forward-Model Scaffold</h3>
-
-    <p>The immediate bottleneck is the forward-model derivation, requiring four layers:</p>
-
-    <h4>Layer 1 — Ideal circular-state gradient</h4>
-    <p>Write ⟨<em>n</em>, <em>n</em>−1, <em>n</em>−1|∇E|<em>n</em>, <em>n</em>−1, <em>n</em>−1⟩ in irreducible tensor form using hydrogen-like wavefunctions with quantum-defect corrections for Sr. Identify the exact rank-2 tensor structure.</p>
-
-    <h4>Layer 2 — Finite-width wavefunction correction</h4>
-    <p>Replace the point-charge gradient with the full expectation value over the circular-state radial probability distribution. Estimate fractional correction relative to leading order as a function of <em>n</em>.</p>
-
-    <h4>Layer 3 — Stray-field / ℓ-mixing coupled correction</h4>
-    <p>For a given |E<sub>stray</sub>|, calculate the admixture amplitude of ℓ = <em>n</em>−2 and ℓ = <em>n</em>−3 states via Stark mixing. Compute the tensor perturbation to ∇E<sub>Ryd</sub>. Express Δ(∇E)/∇E as a function of |E<sub>stray</sub>| and <em>n</em>.</p>
-
-    <h4>Layer 4 — Observable-to-target inversion for Θ(D₃/₂)</h4>
-    <p>Define the explicit formula: Θ = measured δν<sub>Q</sub> × <em>h</em> / (calculated ∇E<sub>Ryd</sub>), and propagate uncertainties from spectroscopic noise, forward-model uncertainty, and purity bounds.</p>
-  </div>
-</section>
-
-<!-- ═══════════ BIBLIOGRAPHY ═══════════ -->
-<section id="biblio">
-  <div class="container">
-    <span class="section-num">§11 · Bibliography</span>
-    <h2>Reference Links</h2>
-
-    <h3>11.1 Stuttgart CRS Programme</h3>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Hölzl-2024]</span> C. Hölzl <em>et al.</em>, <em>Long-Lived Circular Rydberg Qubits of Alkaline-Earth Atoms in Optical Tweezers</em>, Phys. Rev. X <strong>14</strong>, 021024 (2024). <a href="https://arxiv.org/abs/2401.10625">arXiv</a><br>
-      First realisation of alkaline-earth CRS in optical tweezers. Demonstrates <em>n</em> = 79 circular states of ⁸⁸Sr with 2.55 ms lifetime at room temperature via cavity-assisted BBR suppression.
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Wirth-2024]</span> M. Wirth <em>et al.</em>, <em>Quadrupole Coupling of Circular Rydberg Qubits to Inner Shell Excitations</em>, Phys. Rev. Lett. <strong>133</strong>, 123403 (2024). <a href="https://arxiv.org/abs/2405.20476">arXiv</a><br>
-      Demonstrates electric quadrupole coupling between the Sr⁺ ionic core (D₃/₂ level) and the <em>n</em> = 79 circular Rydberg qubit. The direct experimental predecessor of this dossier.
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Pultinevicius-2025]</span> E. Pultinevicius <em>et al.</em>, <em>Long-Lived Giant Circular Rydberg Atoms at Room Temperature</em>, arXiv:2510.27471 (2025). <a href="https://arxiv.org/abs/2510.27471">arXiv</a><br>
-      Extends CRS preparation to <em>n</em> = 103 with lifetimes exceeding 10 ms. Preprint; not yet peer-reviewed.
-    </div>
-
-    <h3>11.2 Sr⁺ Ion Clock — State of the Art</h3>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Lindvall-2025a]</span> T. Lindvall <em>et al.</em>, <em>⁸⁸Sr⁺ Optical Clock with 7.9 × 10⁻¹⁹ Systematic Uncertainty</em>, Phys. Rev. Applied <strong>24</strong>, 044082 (2025). <a href="https://arxiv.org/abs/2509.05964">arXiv</a><br>
-      PTB single-ion Sr⁺ clock achieving among the lowest systematic uncertainties reported.
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Lindvall-2025b]</span> T. Lindvall <em>et al.</em>, <em>Measurement of the Differential Static Scalar Polarizability of the ⁸⁸Sr⁺ Clock Transition</em>, arXiv:2507.02603 (2025). <a href="https://arxiv.org/abs/2507.02603">arXiv</a><br>
-      Precision measurement of Δα₀ with 4.1 × 10⁻⁴ fractional uncertainty.
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Barwood-2004]</span> G. P. Barwood <em>et al.</em>, <em>Measurement of the Electric Quadrupole Moment of the 4d ²D₅/₂ Level in ⁸⁸Sr⁺</em>, Phys. Rev. Lett. <strong>93</strong>, 133001 (2004). <a href="https://doi.org/10.1103/PhysRevLett.93.133001">DOI</a><br>
-      The only direct experimental measurement of Θ(D₅/₂) in ⁸⁸Sr⁺: 2.6(3) ea₀², ~12% uncertainty. The benchmark this programme aims to improve upon.
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Dubé-2005]</span> P. Dubé, A. A. Madej, J. E. Bernard, <em>Electric Quadrupole Shift Cancellation in Single-Ion Optical Frequency Standards</em>, Phys. Rev. Lett. <strong>95</strong>, 033001 (2005). <a href="https://doi.org/10.1103/PhysRevLett.95.033001">DOI</a><br>
-      Six-pair Zeeman averaging method for cancelling the electric quadrupole shift.
-    </div>
-
-    <h3>11.3 Neutral Sr Lattice Clocks</h3>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Aeppli-2024]</span> A. Aeppli <em>et al.</em>, <em>Clock with 8.1 × 10⁻¹⁹ Total Systematic Uncertainty</em>, Phys. Rev. Lett. (2024). <a href="https://arxiv.org/abs/2403.10664">arXiv</a>
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Sanner-2021]</span> C. Sanner <em>et al.</em>, <em>Blackbody Radiation Shift in Strontium Lattice Clocks Revisited</em>, Phys. Rev. Research <strong>3</strong>, L042036 (2021). <a href="https://doi.org/10.1103/PhysRevResearch.3.L042036">DOI</a>
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Dörscher-2023]</span> S. Dörscher <em>et al.</em>, <em>Experimental Determination of the E2–M1 Polarizability of the Strontium Clock Transition</em>, Phys. Rev. Research <strong>5</strong>, L012013 (2023). <a href="https://doi.org/10.1103/PhysRevResearch.5.L012013">DOI</a>
-    </div>
-
-    <h3>11.4 Competing CRS Programmes</h3>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Méhaignerie-2025]</span> P. Méhaignerie <em>et al.</em>, <em>Interacting Circular Rydberg Atoms Trapped in Optical Tweezers</em>, PRX Quantum <strong>6</strong>, 010353 (2025). <a href="https://doi.org/10.1103/PRXQuantum.6.010353">DOI</a>
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Machu-2025]</span> Y. Machu <em>et al.</em>, <em>Non-Destructive Optical Read-Out and Manipulation of Circular Rydberg Atoms</em>, arXiv:2509.24691 (2025). <a href="https://arxiv.org/abs/2509.24691">arXiv</a>
-    </div>
-
-    <h3>11.5 Nuclear Structure</h3>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Zhang-2025]</span> Y.-H. Zhang <em>et al.</em>, <em>Determination of Nuclear Quadrupole Moments of ²⁵Mg, ⁸⁷Sr, and ¹³⁵,¹³⁷Ba via CI+CC Approach</em>, arXiv:2512.07603 (2025). <a href="https://arxiv.org/abs/2512.07603">arXiv</a>
-    </div>
-
-    <h3>11.6 – 11.8 Foundations, Theory, Software</h3>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Gallagher-1994]</span> T. F. Gallagher, <em>Rydberg Atoms</em>, Cambridge University Press (1994). Standard textbook on Rydberg atom physics.
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Haroche-2006]</span> S. Haroche and J.-M. Raimond, <em>Exploring the Quantum: Atoms, Cavities, and Photons</em>, Oxford University Press (2006). Nobel-level treatment of cavity QED with circular Rydberg atoms.
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[Safronova-2018]</span> M. S. Safronova <em>et al.</em>, <em>Search for New Physics with Atoms and Molecules</em>, Rev. Mod. Phys. <strong>90</strong>, 025008 (2018). <a href="https://doi.org/10.1103/RevModPhys.90.025008">DOI</a>
-    </div>
-
-    <div class="bib-entry">
-      <span class="bib-key">[atomiq ONE]</span> Atomiq ONE — open-source quantum hardware orchestration framework. <a href="https://atomiq.one/">atomiq.one</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ TUTORIAL ═══════════ -->
-<section id="tutorial">
-  <div class="container">
-    <span class="section-num">§12 · Tutorial</span>
-    <h2>Reading This Dossier as a PhD Student</h2>
-
-    <h3>12.1 What Is a Circular Rydberg State?</h3>
-    <p>An atom in a Rydberg state has its outermost electron excited to a very high energy level, characterised by a large principal quantum number <em>n</em> (here, <em>n</em> ≈ 79–103). In a "circular" Rydberg state, the electron also has the maximum possible orbital angular momentum: ℓ = <em>n</em> − 1, <em>m</em> = <em>n</em> − 1. Classically, this corresponds to the electron orbiting the nucleus in a thin ring. The orbital radius scales as <em>n</em>²<em>a</em>₀, so at <em>n</em> = 79 the electron orbits at roughly 0.3 μm from the nucleus — macroscopic by atomic standards.</p>
-    <p>Circular states are long-lived because radiative decay pathways are highly constrained by angular-momentum selection rules. This makes blackbody-radiation-induced transitions the dominant loss mechanism, which can be suppressed by placing the atom inside a microwave cavity. The Stuttgart group uses ITO-coated glass plates separated by ~1 cm, achieving lifetimes exceeding 10 ms at room temperature.</p>
-
-    <h3>12.2 Why Strontium? The Divalent Advantage</h3>
-    <p>Most Rydberg experiments use alkali atoms (Rb, Cs), which have a single valence electron. When excited to a Rydberg state, there is no remaining optical electron. Strontium is divalent: it has two valence electrons. When one is excited to a circular Rydberg state, the other remains bound to the Sr²⁺ core, forming an Sr⁺-like ion. This ionic core retains its own electronic structure — including the S₁/₂, P₁/₂, D₃/₂, and D₅/₂ states familiar from Sr⁺ ion-trap experiments — and can be addressed with standard laser wavelengths even while the outer electron is in the circular Rydberg state.</p>
-
-    <h3>12.3 The Electric Quadrupole Shift</h3>
-    <p>An optical atomic clock measures the frequency of a specific electronic transition. For ⁸⁸Sr⁺ ion clocks, the reference is S₁/₂ → D₅/₂ at 674 nm (~445 THz). The D₅/₂ state has a non-spherical charge distribution (a "quadrupole moment" Θ). When this sits in an electric-field gradient ∇E, the state energy shifts proportionally to Θ × ∇E. In a Paul trap the gradient comes from trap electrodes; in a CRS, from the circular Rydberg electron.</p>
-    <p>The EQS is one of the largest systematic shifts in Sr⁺ clocks. Clock groups cancel it by averaging over Zeeman sublevels (Dubé et al.), which eliminates the shift but also destroys information about the quadrupole moment itself. The current best measurement of Θ(D₅/₂) has only 12% precision because calibrating the external field gradient is difficult.</p>
-
-    <h3>12.4 The Core Idea</h3>
-    <p>Can we use the circular Rydberg electron's electric-field gradient as a "calibrated" source for measuring the ionic core's quadrupole moment? The argument: the circular Rydberg electron orbits at a known radius in a known geometry, generating a calculable gradient. By measuring the quadrupole shift of the ionic core's D-state levels inside the CRS and comparing with the calculated gradient, one can extract Θ. The gradient has a simpler geometric origin than a Paul-trap gradient, but it is not truly "known" — it must be modelled with corrections.</p>
-
-    <h3>12.5 The A/B/C Classification</h3>
-    <p>Three questions for each target: (1) Is the CRS gradient the right kind of perturbation? (2) Is the CRS measurement likely to be better than conventional methods? (3) Is the inferential chain short enough to be trustworthy? Targets scoring well on all three are <strong>A1</strong>; those requiring a validated forward model are <strong>A2</strong>; independent cross-checks only are <strong>B</strong>; clearly inferior to conventional methods are <strong>C</strong>.</p>
-
-    <h3>12.6 The Forward Model</h3>
-    <p>The theoretical machinery that converts a measured spectroscopic shift into an extracted atomic constant. It must: (1) calculate the ideal gradient, (2) add finite-width, relativistic, and QED corrections, (3) model ℓ-mixing from stray fields and other non-ideal effects, and (4) propagate all uncertainties. The decisive test is the <em>n</em>-consistency check: if the same Θ is extracted at two different <em>n</em> values and results agree, the model is validated.</p>
-
-    <h3>12.7 How to Read the Feasibility Gates</h3>
-    <p>DC-F1 (resolution) and DC-F2 (purity) are apparatus diagnostics. DC-F3 (field bounds) requires careful characterisation. DC-F4 (<em>n</em>-consistency) is the decisive physics test. DC-F5 (cross-comparison) is the scientific payoff. The <strong>no-go criterion</strong> says: if DC-F4 fails badly (&gt; 5%), the programme should not claim precision extraction.</p>
-
-    <h3>12.8 Where to Start Reading</h3>
-    <p><strong>Start:</strong> Gallagher (1994) chapters 1–5; Haroche & Raimond (2006) chapter 3; Hölzl et al. (2024); Wirth et al. (2024). <strong>Then:</strong> Barwood et al. (2004); Lindvall et al. (2025a); Dubé et al. (2005). <strong>Broader context:</strong> Safronova et al. (2018); Sanner et al. (2021).</p>
-  </div>
-</section>
-
-</main>
-
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer>
-  <p style="margin-bottom: 0.6rem;">
-    <strong style="font-family: var(--serif); font-size: 1.05rem;">Endorsement Marker</strong>
-  </p>
-  <p style="max-width: 600px; margin: 0 auto 1.5rem;">
-    Feasibility/candidate programme document under local stewardship. Proposes measurements and estimates viability; does not claim demonstrated precision. All estimates order-of-magnitude, subject to forward-model revision.
-  </p>
-  <p>
-    Ulrich Warring · <a href="mailto:ulrich.warring@physik.uni-freiburg.de">ulrich.warring@physik.uni-freiburg.de</a><br>
-    Physikalisches Institut, Albert-Ludwigs-Universität Freiburg<br><br>
-    <span style="font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.05em;">CC BY 4.0 · 2026</span>
-  </p>
-</footer>
-
+  </main>
+
+  <script>
+    const header = document.querySelector(".site-header");
+    const toggle = document.querySelector(".nav-toggle");
+    const nav = document.querySelector("#site-nav");
+    const mobileQuery = window.matchMedia("(max-width: 640px)");
+    let lastScrollY = window.scrollY;
+
+    const syncNavState = () => {
+      const mobile = mobileQuery.matches;
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+
+      if (!mobile) {
+        nav.dataset.open = "true";
+        header.classList.remove("is-hidden");
+        return;
+      }
+
+      nav.dataset.open = expanded ? "true" : "false";
+
+      if (expanded) {
+        header.classList.remove("is-hidden");
+      }
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      syncNavState();
+    });
+
+    const revealHeader = () => {
+      header.classList.remove("is-hidden");
+    };
+
+    nav.addEventListener("focusin", revealHeader);
+    toggle.addEventListener("focus", revealHeader);
+
+    window.addEventListener("scroll", () => {
+      if (!mobileQuery.matches) {
+        lastScrollY = window.scrollY;
+        return;
+      }
+
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      const currentScrollY = window.scrollY;
+
+      if (expanded || currentScrollY <= 8 || currentScrollY < lastScrollY) {
+        header.classList.remove("is-hidden");
+      } else if (currentScrollY > lastScrollY + 8) {
+        header.classList.add("is-hidden");
+      }
+
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    window.addEventListener("resize", syncNavState);
+    syncNavState();
+  </script>
 </body>
 </html>

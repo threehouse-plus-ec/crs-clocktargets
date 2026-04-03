@@ -6,14 +6,14 @@ authors:
   - family-names: Warring
     given-names: Ulrich
     orcid: ""
-    affiliation: "Physikalisches Institut, Albert-Ludwigs-Universität Freiburg"
+    affiliation: "Physikalisches Institut, Albert-Ludwigs-Universitat Freiburg"
 version: "1.0"
 date-released: "2026-03-19"
 url: "https://threehouse-plus-ec.github.io/crs-clocktargets/"
 repository-code: "https://github.com/threehouse-plus-ec/crs-clocktargets"
 abstract: >-
   Open feasibility study exploring whether the circular Rydberg state (CRS)
-  platform for ⁸⁸Sr could be used for precision measurements of ionic-core
+  platform for 88Sr could be used for precision measurements of ionic-core
   atomic-structure quantities relevant to strontium ion clocks. Identifies
   quadrupole moments and E2 matrix elements as high-potential targets,
   specifies falsifiable feasibility gates and a no-go criterion, and
@@ -27,4 +27,4 @@ keywords:
   - precision spectroscopy
   - atomic structure
   - feasibility study
-license: CC-BY-4.0
+license: CC-BY-NC-SA-4.0

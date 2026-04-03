@@ -1,0 +1,16 @@
+# Repository Licence Declaration
+
+This repository follows the T(h)reehouse +EC split licence architecture.
+
+## Scope
+
+- Authored works in `README.md`, `docs/`, and comparable dossier content are licensed under
+  Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (`CC-BY-NC-SA-4.0`)
+  unless a file states otherwise.
+- Design assets in `assets/` are licensed under MIT. See `assets/LICENCE`.
+- Page chrome and supporting code in `index.html` are licensed under MIT.
+- External fonts remain under their upstream SIL OFL 1.1 terms and are not relicensed here.
+
+## Folder rule
+
+When a folder carries its own `LICENCE`, that folder-level declaration governs that folder.
